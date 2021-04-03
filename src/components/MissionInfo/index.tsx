@@ -1,14 +1,24 @@
 import React from 'react'
 import { useLaunchMissionInfoQuery } from './../../generated/graphql';
 import { MissionInfoList } from './MissionInfoList'
+import { useEffect } from 'react';
 
-export const MissionInfo = () => {
-    const { data, loading, error } = useLaunchMissionInfoQuery({
-           variables: {
-              id: '24'
-           },
+
+interface OwnProps {
+    id: number;
+  }
+
+export const MissionInfo = ({id}:OwnProps) => {
+    console.log(id)
+    const { data, loading, error, refetch } = useLaunchMissionInfoQuery({
+           variables: { id: String(id) },
          });
 
+        useEffect(() => {
+            refetch();
+           console.log(id)
+
+          }, [id]);
 
 
     if(loading)

@@ -1,29 +1,27 @@
-import React from 'react'
-import { MissionsInfoQuery } from '../../generated/graphql'
+import React from "react";
+import { MissionsInfoQuery } from "../../generated/graphql";
 
-interface Props{
-    data: MissionsInfoQuery
+export interface OwnProps {
+  handleChange: (newId: number) => void;
 }
 
-function handleClick(e:any){
-    //const value = event?.target.value
-    console.log(e.target.value)
+interface Props extends OwnProps {
+  data: MissionsInfoQuery;
 }
 
-export const MissionList:React.FC<Props> = ({data}) => {
-    return (
-        <div>
-            <ul>
-                {
-                    data.launches?.map((launchObj:any, ind:any)=>{
-                        return <li key={ind} onClick={handleClick}>
-                            {launchObj.mission_name}
-                            {launchObj.mission_id}
-                        </li>
-                        
-                    })
-                }
-            </ul>
-        </div>
-    )
-}
+export const MissionList: React.FC<Props> = ({ data, handleChange }) => {
+  return (
+    <div>
+      <ul>
+        {data.launches?.map((launchObj: any, ind: any) => {
+          return (
+            <li key={ind} 
+            onClick={() => handleChange(launchObj.mission_id)}>
+              {launchObj.mission_name} 
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
